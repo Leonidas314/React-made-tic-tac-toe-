@@ -23,16 +23,16 @@ function App(){
   const [turn,setTurn] = useState(TURNS.X);
 
   const updateBoard = (index) => {
-    //render X or O's on board:
-
-    //if there is something already on boards index, do nothing
-    if(board[index]) return //<- just return
-    
-    const newBoard =[...board] //IMPORTANT: DONT USE THE BOARD, USE newBoard INSTEAD, PROPS AN STATE ARE INMUTABLE
+    if(board[index]) return 
+    const newBoard = board
     newBoard[index] = turn
     setBoard(newBoard)
+    console.log(newBoard)
+
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
+    
+  
   }
 
   return (
