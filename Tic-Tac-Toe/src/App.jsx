@@ -9,7 +9,7 @@ const TURNS = {
 const Square = ({ children ,isSelected,updateBoard, index})=> {
   const className=`square ${isSelected ? 'is-selected' : ''}`
   const handleClick = () => {
-    updateBoard()
+    updateBoard(index)
   }
   return (
     <div onClick={handleClick} className={className}>
@@ -22,7 +22,15 @@ function App(){
   const [board,setBoard] = useState(Array(9).fill(null));
   const [turn,setTurn] = useState(TURNS.X);
 
-  const updateBoard = () => {
+  const updateBoard = (index) => {
+    //render X or O's on board:
+
+    //if there is something already on boards index, do nothing
+    if(board[index]) return //<- just return
+    
+    const newBoard =[...board] //IMPORTANT: DONT USE THE BOARD, USE newBoard INSTEAD, PROPS AN STATE ARE INMUTABLE
+    newBoard[index] = turn
+    setBoard(newBoard)
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
   }
