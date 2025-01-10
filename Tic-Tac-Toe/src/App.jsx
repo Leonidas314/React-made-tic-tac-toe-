@@ -1,38 +1,54 @@
-import { useState } from "react"
-
+import React,{ useState } from "react"
+import { Square } from "./components/Square";
 const TURNS = {
   X:'X',
   O:'O'
 }
-
-
-const Square = ({ children ,isSelected,updateBoard, index})=> {
-  const className=`square ${isSelected ? 'is-selected' : ''}`
-  const handleClick = () => {
-    updateBoard(index)
-  }
-  return (
-    <div onClick={handleClick} className={className}>
-      {children}
-    </div>
-  )
-}
+const WINNER_COMBOS = [
+  [0,1,2],
+  [3,4,5],
+  [6,7,8],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8],
+  [0,4,8],
+  [2,4,6]
+]
 
 function App(){
   const [board,setBoard] = useState(Array(9).fill(null));
   const [turn,setTurn] = useState(TURNS.X);
-
+  const [winner,setWinner] = useState(null)
+  const checkWinner = ([...boardToCheck]) => {
+    for(const combo of WINNER_COMBOS){
+      const  [a,b,c] = combo
+      console.log(boardToCheck
+      )
+      if (
+        boardToCheck[a] &&
+        boardToCheck[a] === boardToCheck[b] &&
+        boardToCheck[a] === boardToCheck[c]
+       ){
+        return boardToCheck[a]
+       }
+    }
+  }
   const updateBoard = (index) => {
-    if(board[index]) return 
-    const newBoard = board
-    newBoard[index] = turn
-    setBoard(newBoard)
-    console.log(newBoard)
-
+    console.log(board)
+    if(board[index] || winner) return 
+    setBoard((prevBoard) => {
+      const newBoard = [...prevBoard]
+      newBoard[index] = turn
+      return newBoard
+    });
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
-    
-  
+
+    const newWinner = checkWinner(board)
+    console.log(newWinner)
+    if (newWinner) {
+      setWinner(newWinner);
+    }
   }
 
   return (
@@ -40,14 +56,14 @@ function App(){
       <h1>Tic - Tac - Toe</h1>
       <section className="game">
         {
-        board.map((...index) => {
+        board.map((square,index) => {
           return (
            <Square 
            key={index} 
            index={index}  
            updateBoard={updateBoard}
            >
-            {board[index]}
+              {square}
           </Square>
           )
         })
