@@ -36,19 +36,20 @@ function App(){
   const updateBoard = (index) => {
     console.log(board)
     if(board[index] || winner) return 
-    setBoard((prevBoard) => {
-      const newBoard = [...prevBoard]
+    setBoard((board) => {
+      const newBoard = [...board]
       newBoard[index] = turn
+
+    const newWinner = checkWinner([...newBoard])
+    console.log(newWinner)
+    if (newWinner) {
+      setWinner(newWinner);
+    }
       return newBoard
     });
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
 
-    const newWinner = checkWinner(board)
-    console.log(newWinner)
-    if (newWinner) {
-      setWinner(newWinner);
-    }
   }
 
   return (
