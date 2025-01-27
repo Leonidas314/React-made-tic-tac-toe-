@@ -76,6 +76,20 @@ function App(){
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
         
       </section>
+      {
+        winner !== null && (
+          <section className="winner">
+            <div className ="text">
+              <h2> {
+                winner ===false ? 'Draw' : `${winner} wins!`
+                }
+              </h2>
+              <header className="win">{winner && <Square >{winner}</Square>}</header>
+              <footer><button>Restart Game</button></footer>
+            </div>
+          </section>
+        )
+      }
     </main>
   )
 
