@@ -1,5 +1,6 @@
 import React,{ useState } from "react"
 import { Square } from "./components/Square";
+import confetti from "canvas-confetti"
 const TURNS = {
   X:'X',
   O:'O'
@@ -43,6 +44,7 @@ function App(){
       newBoard[index] = turn
     const newWinner = checkWinner([...newBoard])
     if (newWinner) {
+      confetti();
       setWinner(newWinner);
     }else if(checkEndGame([...newBoard]))
       setWinner(false);
